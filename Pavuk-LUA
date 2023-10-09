@@ -1,0 +1,79 @@
+math.randomseed(os.time()) -- Инициализируем генератор случайных чисел
+
+Spider = {} -- Создаем таблицу Spider
+
+function Spider:new()
+    local spider = {} -- Создаем новый объект паука
+    setmetatable(spider, self) -- Устанавливаем метатаблицу для нашего объекта
+    self.__index = self -- Указываем на текущую таблицу как индекс для поиска
+
+    -- Генерируем случайные значения для параметров паука
+    spider.wind = math.random(0, 100)
+    spider.insect_density = math.random(0, 100)
+    spider.humidity = math.random(0, 100)
+    spider.temperature = math.random(-10, 40)
+    spider.light_level = math.random(0, 100)
+
+    return spider -- Возвращаем созданный объект
+end
+
+function Spider:analyze_environment()
+    -- Пример логики анализа окружающей среды.
+    if self.wind < 50 and self.insect_density > 30 and self.humidity > 40 then
+        return true -- Паук решает строить паутину.
+    else
+        return false -- Паук решает не строить паутину.
+    end
+end
+
+function Spider:build_web()
+    if self.light_level > 70 then
+        local web_size = {"огромная паутина", "средняя паутина", "маленькая паутина"}
+        local chosen_size = web_size[math.random(1, #web_size)] -- Выбираем случайный размер паутины
+        print("Паук выбрал строить", chosen_size)
+        for i = 0, 100 do
+            print("Отсчет:", i, "%")
+        end
+        return true -- Паук строит паутину.
+    end
+    return false
+end
+
+function Spider:catch_insects()
+    local insects = {
+        мухи = math.random(0, 10),
+        комары = math.random(0, 10),
+        жуки = math.random(0, 10),
+        пчелы = math.random(0, 10)
+    }
+    return insects
+end
+
+function Spider:killed_by_human()
+    local choices = {"да", "нет"}
+    return choices[math.random(1, #choices)]
+end
+
+function Spider:life_quality()
+    local choices = {"хорошую", "убогую", "ITHUB"}
+    return choices[math.random(1, #choices)]
+end
+
+if arg[0] == "pavuk" then
+    local spider = Spider:new()
+    local decision = spider:analyze_environment()
+
+    if decision then
+        print("Паук решил строить паутину")
+        local result = spider:build_web()
+        if result then
+            print("Паук построил паутину")
+            local caught_insects = spider:catch_insects()
+            print("Пойманные насекомые:", caught_insects.мухи, caught_insects.комары, caught_insects.жуки, caught_insects.пчелы)
+            print("Убил ли нас человек:", spider:killed_by_human())
+            print("Какую жизнь мы прожили:", spider:life_quality())
+        end
+    else
+        print("Паук решает не строить паутину")
+    end
+end
