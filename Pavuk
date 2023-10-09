@@ -1,0 +1,55 @@
+import random
+
+class Spider:
+    def __init__(self):
+        self.wind = random.randint(0, 100)
+        self.insect_density = random.randint(0, 100)
+        self.humidity = random.randint(0, 100)
+        self.temperature = random.randint(-10, 40)
+        self.light_level = random.randint(0, 100)
+
+    def analyze_environment(self):
+        # Пример логики анализа окружающей среды.
+        if self.wind < 50 and self.insect_density > 30 and self.humidity > 40:
+            return True  # Паук решает строить паутину.
+        else:
+            return False  # Паук решает не строить паутину.
+
+    def build_web(self):
+        if self.light_level > 70:
+            web_size = random.choice(["огромная паутина", "средняя паутина", "маленькая паутина"])
+            print("Паук выбрал строить", web_size)
+            for i in range(101):
+                print(f"Отсчет: {i}%")
+            return True  # Паук строит паутину.
+
+    def catch_insects(self):
+        insects = {
+            "мухи": random.randint(0, 10),
+            "комары": random.randint(0, 10),
+            "жуки": random.randint(0, 10),
+            "пчелы": random.randint(0, 10)
+        }
+        return insects
+
+    def killed_by_human(self):
+        return random.choice(["да", "нет"])
+
+    def life_quality(self):
+        return random.choice(["хорошую", "убогую", "ITHUB"])
+
+if __name__ == "__main__":
+    spider = Spider()
+    decision = spider.analyze_environment()
+    
+    if decision:
+        print("Паук решил строить паутину")
+        result = spider.build_web()
+        if result:
+            print("Паук построил паутину")
+            caught_insects = spider.catch_insects()
+            print("Пойманные насекомые:", caught_insects)
+            print("Убил ли нас человек:", spider.killed_by_human())
+            print("Какую жизнь мы прожили:", spider.life_quality())
+    else:
+        print("Паук решает не строить паутину")
